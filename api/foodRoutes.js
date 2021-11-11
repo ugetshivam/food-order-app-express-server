@@ -13,6 +13,12 @@ router.get('/allfoods', async (req,res)=>{
     }
 })
 
-
+router.post('/login', (req,res)=>{
+    console.log(req.body);
+})
+router.post("/register", (req,res)=>{
+    console.log(req.body);
+})
+router.get("/user", (req,res)=>{})
 
 module.exports = router;
