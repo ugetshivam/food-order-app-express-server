@@ -1,24 +1,30 @@
-const mongoose = require('mongoose');
 const express = require('express');
 const router = express.Router();
 const Food = require('../models/food');
+const Order = require('../models/order');
 
-router.get('/allfoods', async (req,res)=>{
+router.get('/allfoods', async (req, res) => {
     try {
         const allfoods = await Food.find({});
         res.status(200).json(allfoods);
     }
-    catch(e) {
-        res.status(404).json({msg:"Cannot fetch the food items right now"});
+    catch (e) {
+        res.status(404).json({ msg: "Cannot fetch the foods at the moment" })
+    }
+});
+
+router.post('/placeorder', async (req, res) => {
+
+    try {
+        const { cart: orderedItems } = req.body;
+        const newOrder = new Order({ orderedItems });
+        // console.log(newOrder);
+        await newOrder.save()
+        res.status(200).json({ msg: 'Order Place Successfully' });
+    }
+    catch (e) {
+        res.status(400).json({ msg: 'Order Cannot be placed' });
     }
 })
-
-router.post('/login', (req,res)=>{
-    console.log(req.body);
-})
-router.post("/register", (req,res)=>{
-    console.log(req.body);
-})
-router.get("/user", (req,res)=>{})
 
 module.exports = router;
