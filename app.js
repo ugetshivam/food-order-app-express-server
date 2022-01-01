@@ -17,7 +17,7 @@ mongoose.connect(process.env.MONGO_URL)
 app.use(express.json());
 app.use(cors(
     {
-        origin: ['http://localhost:3000', 'https://agitated-swanson-e0827c.netlify.app'],
+        origin: ['http://localhost:3000', 'https://adoring-blackwell-5a0e2e.netlify.app'],
         credentials:true
     },
 ))
