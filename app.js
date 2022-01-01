@@ -3,7 +3,7 @@ const app = express();
 const mongoose = require('mongoose');
 const seedDB = require('./seed');
 const cors = require('cors');
-mongoose.connect('mongodb://localhost:27017/food-db')
+mongoose.connect(process.env.MONGO_URL)
     .then(()=>{
         console.log("DB Connected");
     })
@@ -16,7 +16,7 @@ mongoose.connect('mongodb://localhost:27017/food-db')
 app.use(express.json());
 app.use(cors(
     {
-        origin: ['http://localhost:3000'],
+        origin: ['http://localhost:3000', 'https://nifty-elion-1e2c26.netlify.app'],
         credentials:true
     },
 ))
