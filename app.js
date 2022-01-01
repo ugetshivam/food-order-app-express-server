@@ -3,6 +3,7 @@ const app = express();
 const mongoose = require('mongoose');
 const seedDB = require('./seed');
 const cors = require('cors');
+require('dotenv').config();
 mongoose.connect(process.env.MONGO_URL)
     .then(()=>{
         console.log("DB Connected");
