@@ -3,6 +3,7 @@ const app = express();
 const mongoose = require('mongoose');
 const seedDB = require('./seed');
 const cors = require('cors');
+require('dotenv').config();
 mongoose.connect(process.env.MONGO_URL)
     .then(()=>{
         console.log("DB Connected");
@@ -16,7 +17,7 @@ mongoose.connect(process.env.MONGO_URL)
 app.use(express.json());
 app.use(cors(
     {
-        origin: ['http://localhost:3000', 'https://sleepy-kepler-c2f95b.netlify.app'],
+        origin: ['http://localhost:3000'],
         credentials:true
     },
 ))
@@ -34,7 +35,7 @@ app.get('/hello', (req, res) => {
 app.use(foodRoutes);
 
 
-const port = process.env.PORT || 8000
+const port = process.env.PORT || 8000;
 
 app.listen(port, () => {
     console.log(`server running at ${port}`)
