@@ -12,8 +12,20 @@ const User = require('../models/user')
 //    res.send(newUser);
 // })
 
-router.get('/register', (req,res)=>{
-    console.log(req.body);
+router.post('/register', async (req,res)=>{
+    try{
+    const {username, password, email} = req.body;
+    const user = new User({
+        username: username,
+        email: email
+    });
+    await User.register(user, password);
+    res.status(200).json({msg: "User added"})
+}
+    catch (e) {
+        res.status(404).json({ msg: "User couldnt be added" })
+    }
+
 })
 
 module.exports = router;
