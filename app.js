@@ -3,6 +3,10 @@ const app = express();
 const mongoose = require('mongoose');
 const seedDB = require('./seed');
 const cors = require('cors');
+const session = require('express-session');
+const passport = require('passport');
+const LocalStrategy = require('passport-local');
+const User = require('./models/user');
 require('dotenv').config();
 mongoose.connect(process.env.MONGO_URL)
     .then(()=>{
@@ -22,9 +26,24 @@ app.use(cors(
     },
 ))
 
+const sessionConfig = {
+    secret:'weneedsomebettersecret',
+    resave: false,
+    saveUninitialized: true,
+}
+
+app.use(session(sessionConfig));
+
+app.use(passport.initialize());
+app.use(passport.session());
+
+passport.use(new LocalStrategy(User.authenticate()));
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
+
 
 const foodRoutes = require('./api/foodRoutes');
-
+const authRoutes = require('./api/authRoutes');
 
 app.get('/hello', (req, res) => {
     
@@ -33,6 +52,7 @@ app.get('/hello', (req, res) => {
 
 
 app.use(foodRoutes);
+app.use(authRoutes);
 
 
 const port = process.env.PORT || 8000;

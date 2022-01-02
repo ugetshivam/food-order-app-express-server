@@ -21,6 +21,7 @@ router.post('/placeorder', async (req, res) => {
         // console.log(newOrder);
         await newOrder.save()
         res.status(200).json({ msg: 'Order Place Successfully' });
+        
     }
     catch (e) {
         res.status(400).json({ msg: 'Order Cannot be placed' });
