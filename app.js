@@ -21,6 +21,7 @@ mongoose.connect(process.env.MONGO_URL)
 app.use(express.json());
 app.use(cors(
     {
+        methods: ['GET', 'POST'],
         origin: ['http://localhost:3000', 'https://adoring-blackwell-5a0e2e.netlify.app'],
         credentials:true
     },
@@ -38,15 +39,19 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 passport.use(new LocalStrategy(User.authenticate()));
-passport.serializeUser(User.serializeUser());
-passport.deserializeUser(User.deserializeUser());
-
+passport.serializeUser((user,cb)=>{
+    cb(null, user);
+});
+passport.deserializeUser((id,cb)=>{
+    User.findOne({_id: id}, (err,user)=>{
+        cb(err, user);
+    })
+});
 
 const foodRoutes = require('./api/foodRoutes');
 const authRoutes = require('./api/authRoutes');
 
 app.get('/hello', (req, res) => {
-    
     res.status(200).json({msg:'Hello from the server'})
 })
 

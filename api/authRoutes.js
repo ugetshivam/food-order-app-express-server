@@ -1,17 +1,11 @@
+const { json } = require('express');
 const express = require('express');
+const passport = require('passport');
+const { rawListeners } = require('../models/user');
 const router = express.Router();
 const User = require('../models/user')
 
-// router.get('/fakeuser', async (req, res)=>{
-//     const user = new User({
-//         username: 'sabeel',
-//         email: 'sabeel@gmail.com'
-//     });
-
-//    const newUser = await User.register(user, 'sabeel12');
-//    res.send(newUser);
-// })
-
+// Register new user
 router.post('/register', async (req,res)=>{
     try{
     const {username, password, email} = req.body;
@@ -28,4 +22,31 @@ router.post('/register', async (req,res)=>{
 
 })
 
+// Login the User
+router.post('/login', (req,res, next)=>{
+passport.authenticate('local', (err,user,info)=>{
+    if(err) throw err;
+    if(!user) res.status(404).json({msg:"No user exists"})
+    else{
+        req.logIn(user, err =>{
+            if(err) throw err;
+            res.status(200).json({msg: "User logged in successfully"})
+            console.log(req.user.username);
+        })
+    }
+})(req,res,next);
+});
+
+router.get('/logout', (req,res)=>{
+    req.logout();
+    res.status(200).json({msg:"Logged out!"})
+});
+
+router.get('/getuser', (req,res)=>{
+    if(req.user){
+        const {username} = req.user;
+        console.log(username);
+        res.status(200).json({user:username});
+    }
+});
 module.exports = router;
