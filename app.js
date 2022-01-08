@@ -22,7 +22,7 @@ app.use(express.json());
 app.use(cors(
     {
         methods: ['GET', 'POST'],
-        origin: ['http://localhost:3000', 'https://adoring-blackwell-5a0e2e.netlify.app'],
+        origin: ['http://localhost:3000', 'https://modest-shockley-f16654.netlify.app'],
         credentials:true
     },
 ))
