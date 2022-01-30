@@ -1,1 +1,1 @@
-CHECK THIS PROJECT OUT ON https://modest-shockley-f16654.netlify.app
+CHECK THIS PROJECT OUT AT https://modest-shockley-f16654.netlify.app
