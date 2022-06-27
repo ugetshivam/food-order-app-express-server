@@ -23,7 +23,7 @@ app.use(cors(
     {
         methods: ['GET', 'POST'],
         origin: ['http://localhost:3000', 'https://modest-shockley-f16654.netlify.app'],
-        credentials:true
+        credentials:true,
     },
 ))
 
